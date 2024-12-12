@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignUp - Stock Manager Advance</title>
+    <style>
+        /* Global Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url("https://img.freepik.com/free-vector/circuits-blue-red-gradient-digital-background_23-2148821701.jpg?t=st=1732112291~exp=1732115891~hmac=c69a8aa0d6af700372d6c07943427f9a631792f828d9df70d3617cc8e9025858&w=826");
+            background-size: cover;
+            background-position: center;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        /* Wrapper for background */
+        .background-wrapper {
+            background: rgba(0, 0, 0, 0.7); /* Dark overlay for better visibility */
+            padding: 40px;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Main heading style */
+        .main-heading {
+            text-align: center;
+            font-size: 32px;
+            font-weight: bold;
+            color: #ffbb33; /* Gold color for heading */
+            margin-bottom: 20px;
+        }
+
+        /* Form container styling */
+        .form-container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            font-size: 26px;
+            margin-bottom: 20px;
+        }
+
+        /* Form fields */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+
+        input[type="text"]:focus, input[type="password"]:focus {
+            border-color: #ff6a00; /* Focus color change */
+            outline: none;
+        }
+
+        /* Submit button styling */
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background-color: #ff6a00;
+            color: #fff;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background-color: #ffbb33; /* Hover effect */
+        }
+
+        /* Links styling */
+        p {
+            text-align: center;
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        p a {
+            color: #ff6a00;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        p a:hover {
+            text-decoration: underline;
+        }
+        .view-more-btn {
+    padding: 4px px;
+    font-size: 18px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.view-more-btn:hover {
+    background-color: black;
+}
+        
+    </style>
+</head>
+<body>
+    <div class="background-wrapper">
+        <h1 class="main-heading">Welcome to Stock Manager Advance</h1>
+        
+        <div class="form-container">
+            <h2>SignUp</h2>
+            <form action="/signup" method="post">
+                <div class="form-group">
+                    <label for="name">Username:</label>
+                    <input type="text" id="name" name="username" placeholder="Enter your username" required autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                </div>
+                <button type="submit" class="submit-btn">SignUp</button>
+            </form>
+        </div>
+        <a href="#" id="back-btn" class="view-more-btn" onclick="goBack()">
+            <i class="fa fa-arrow-left"></i> Back
+        </a>
+        
+        <script>
+            function goBack() {
+                // Perform any necessary actions before navigating back if needed.
+                
+                // Redirect to the login page (login.ejs).
+                window.location.href = '/login';  // Adjust the path if needed.
+            }
+        </script>
+        
+    </div>
+</body>
+</html>

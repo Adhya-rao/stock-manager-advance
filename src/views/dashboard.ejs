@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    
+    <link rel="stylesheet" href="/style.css">
+
+    <style>
+        body {
+    display: flex;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    height: 100vh; /* Ensure the layout fills the viewport height */
+}
+
+/* Sidebar container */
+.sidebar {
+    width: 250px;
+    background-color: #2c3e50;
+    color: white;
+    padding: 10px 15px; /* Reduced padding */
+    height: 100vh; /* Full height sidebar */
+    position: fixed;
+    left: 0;
+    top: 0;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    font-size: 14px;
+    overflow-y: auto; /* Enable scrolling if content overflows */
+}
+
+/* Sidebar links */
+.sidebar a {
+    display: block;
+    color: white;
+    padding: 8px 10px; /* Reduced padding */
+    text-decoration: none;
+    margin-bottom: 3px; /* Reduced margin between links */
+    border-radius: 5px; /* Rounded corners for a modern look */
+    font-family: Arial, sans-serif; /* Default font for links */
+}
+
+/* Hover effect for links */
+.sidebar a:hover {
+    background-color: #34495e;
+    color: #ecf0f1; /* Slightly lighter text color on hover */
+}
+
+/* Icons */
+.sidebar a i {
+    margin-right: 8px; /* Add space between icon and text */
+}
+
+/* Specific styles for headings */
+.sidebar h2 {
+    color: #f39c12; /* Golden text color */
+    font-size: 18px; /* Larger font size for headings */
+    text-transform: uppercase; /* Make it bold and uppercase */
+    margin-bottom: 15px; /* Add some space below the heading */
+    font-family: 'Georgia', serif; /* Unique font for heading */
+}
+
+/* Custom styles for specific links */
+.sidebar a[onclick*="welcome"] {
+    color: #1abc9c; /* Teal color for Welcome */
+    font-weight: bold;
+    font-style: italic;
+}
+
+.sidebar a[onclick*="product-management"] {
+    color: #e74c3c; /* Red color for Product Management */
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.sidebar a[onclick*="customer-management"] {
+    color: #e74c3c; /* Purple color for Customer Management */
+    font-weight: bold;
+    text-transform: uppercase;
+    
+}
+
+/* Ensure Logout button is visible */
+.sidebar a[href="/logout"] {
+    margin-top: 20px; /* Add spacing at the end of the sidebar */
+    background-color: #e74c3c; /* Red background for logout */
+    color: white; /* White text */
+    text-align: center; /* Center the text */
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 5px; /* Rounded button style */
+}
+
+.sidebar a[href="/logout"]:hover {
+    background-color: #c0392b; /* Darker red on hover */
+}
+/* Styling for Welcome Section */
+#welcome {
+    position: relative;
+    height: 100vh; /* Full screen height */
+     /* Replace with your background image URL */
+    background-size: cover;
+    background-position: center;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Container to center content */
+.welcome-container {
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+    max-width: 800px; /* Limit container width */
+    width: 100%;
+}
+
+/* Title Styling */
+#welcome h1 {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    font-family: 'Georgia', serif;
+}
+
+/* Paragraph Styling */
+#welcome p {
+    font-size: 18px;
+    margin-bottom: 30px;
+    line-height: 1.5;
+    font-family: 'Arial', sans-serif;
+    z-index: 0; /* Sets welcome section below stock alert */
+    position: relative;
+}
+
+/* Call-to-Action Button Styling */
+
+/* Features Section Styling */
+.features {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.feature {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 20px;
+    border-radius: 8px;
+    width: 30%;
+    text-align: center;
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.feature i {
+    margin-bottom: 15px;
+    color: #f39c12;
+}
+
+.feature h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.feature p {
+    font-size: 16px;
+}
+
+/* Mobile responsiveness for features section */
+@media (max-width: 768px) {
+    .features {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .feature {
+        width: 80%;
+        margin-bottom: 20px;
+    }
+}
+
+#add-product {
+   
+    width: 100%;
+    padding: 20px;
+    color:#1abc9c;
+    background-color: #dee793; /* Optional: Match other sections */
+    margin-top: 20px; /* Adds spacing below welcome section */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Optional shadow */
+    display: none; /* Hidden by default */
+    position: relative; /* Ensure no overlap */
+}
+
+/* When #add-product is visible */
+#add-product.active {
+    display: block; /* Display when active */
+}
+
+/* Form-specific alignment */
+#product-form {
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #181619c9;
+    border-radius: 8px;
+    background-color: #360718;
+    max-width: 800px;
+}
+
+.content {
+    margin-left: 250px; /* Sidebar width */
+    padding: 20px;
+    flex-grow: 1;
+    background-color: #ffffff;
+    overflow-y: auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative; /* Add relative positioning to allow stacking */
+}
+
+* {
+    box-sizing: border-box;
+}
+
+        .hidden {
+            display: none;
+        }
+        /* Ensure sections are hidden by default */
+.hidden {
+    display: none;
+}
+
+.section {
+    display: none; /* Hide all sections by default */
+    margin-top: 20px;
+}
+
+.section.active {
+    display: block; /* Show the active section */
+}
+
+
+        
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 50%;
+        }
+
+        input,
+        textarea {
+            padding: 10px;
+            border: 1px solid #bdc3c7;
+            border-radius: 4px;
+        }
+        #stock-alert {
+    height: 100vh; /* Takes up the full height of the viewport */
+    overflow-y: auto;  /* Enables scrolling if content exceeds the height */
+    padding: 20px;
+    background-color: #f9f9f9; /* Optional background color */
+    border: 1px solid #ccc; /* Optional border */
+    box-sizing: border-box; /* Ensures padding is included in the height */
+    position: absolute; /* Absolute positioning to prevent overlap */
+    top: 0; /* Aligns the section to the top */
+    left: 0; /* Aligns the section to the left */
+    right: 0; /* Makes it stretch to the right side */
+    z-index: 1; /* Ensures it's on top */
+}
+
+#stock-alert h1 {
+    margin-top: 0; /* Remove top margin for better spacing */
+}
+
+#stock-alert p {
+    margin-bottom: 10px; /* Space between each product */
+}
+#product-management {
+    background-image: url('https://img.freepik.com/free-photo/chain-people-origami_23-2148621020.jpg?t=st=1733927059~exp=1733930659~hmac=59df7861c7ce54c831e1e28caa212eff22a72e8973c803d2e756935c007d4f53&w=996');
+    height: 100vh; /* Takes up the full height of the viewport */
+    overflow-y: auto;  /* Enables scrolling if content exceeds the height */
+    padding: 20px;
+    background-color: #abe1e4; /* Optional background color */
+    border: 1px solid #ccc; /* Optional border */
+    box-sizing: border-box; /* Ensures padding is included in the height */
+    position: absolute; /* Absolute positioning to prevent overlap */
+    top: 0; /* Aligns the section to the top */
+    left: 0; /* Aligns the section to the left */
+    right: 0; /* Makes it stretch to the right side */
+    z-index: 1; /* Ensures it's on top */
+}
+#welcome {
+    z-index: 0; /* Sets welcome section below product management */
+    position: relative; /* Ensures it is positioned correctly */
+}
+
+#product-management h1 {
+    margin-top: 0; /* Remove top margin for better spacing */
+}
+
+#product-management p {
+    margin-bottom: 10px; /* Space between description */
+}
+
+/* Ensure the chart takes up appropriate space */
+#productChart {
+    max-width: 100%;
+    height: auto;
+}
+#generate-product-report {
+    
+    height: 100vh; /* Takes up the full height of the viewport */
+    overflow-y: auto;  /* Enables scrolling if content exceeds the height */
+    padding: 20px;
+    background-color: #fbaeae; /* Optional background color */
+    border: 1px solid #ccc; /* Optional border */
+    box-sizing: border-box; /* Ensures padding is included in the height */
+    position: absolute; /* Absolute positioning to prevent overlap */
+    top: 0; /* Aligns the section to the top */
+    left: 0; /* Aligns the section to the left */
+    right: 0; /* Makes it stretch to the right side */
+    z-index: 1; /* Ensures it's on top of other sections */
+}
+
+/* Ensure content (welcome section) has appropriate z-index */
+
+
+/* Styling for the button */
+#download-pdf {
+   
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#download-pdf:hover {
+    background-color: #45a049;
+}
+/* Ensure the content area doesn't overlap */
+.content {
+    margin-left: 250px; /* Sidebar width */
+    padding: 20px;
+    flex-grow: 1;
+    background-color: #eff5f8;
+    overflow-y: auto;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    position: relative; /* Allow stacking of child elements */
+}
+
+/* Ensure the #view-products section takes up the full screen */
+#view-products {
+    height: 100vh; /* Takes up the full height of the viewport */
+    overflow-y: auto;  /* Enables scrolling if content exceeds the height */
+    padding: 20px;
+    background-image: url('https://media.istockphoto.com/id/1200733291/photo/silhouette-paper-in-man-shape-hold-hand-together.jpg?s=1024x1024&w=is&k=20&c=E98OAWFNs_3gNgletw9HKYfEnyOdHhWjcgBLwMIp1u4=');
+    background-color:white; /* Optional background color */
+    border: 1px solid #ccc; /* Optional border */
+    box-sizing: border-box; /* Ensures padding is included in the height */
+    position: absolute; /* Absolute positioning to prevent overlap */
+    top: 0; /* Aligns the section to the top */
+    left: 0; /* Aligns the section to the left */
+    right: 0; /* Makes it stretch to the right side */
+    z-index: 1; /* Ensures it's on top of other sections */
+}
+
+
+
+
+/* Styling for the form */
+form {
+    margin: 10px 0;
+}
+
+form input, form textarea {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    box-sizing: border-box;
+}
+
+form button {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+form button:hover {
+    background-color: #050505;
+}
+/* Ensure #customer-management takes the full height */
+#customer-management {
+    background-image: url('https://img.freepik.com/free-photo/chain-people-origami_23-2148621020.jpg?t=st=1733927059~exp=1733930659~hmac=59df7861c7ce54c831e1e28caa212eff22a72e8973c803d2e756935c007d4f53&w=996');
+    height: 100vh; /* Takes up the full height of the viewport */
+    overflow-y: auto; /* Allows scrolling if content exceeds the height */
+    padding: 20px;
+    background-color: peachpuff; /* Optional background color */
+    border: 1px solid #ccc; /* Optional border */
+    box-sizing: border-box; /* Ensures padding is included in the height */
+    position: absolute; /* Prevents overlap with other sections */
+    top: 0; /* Aligns the section to the top */
+    left: 0; /* Aligns the section to the left */
+    right: 0; /* Stretches to the right side */
+    z-index: 1; /* Ensures it's on top of other sections */
+}
+
+/* Ensure other sections have appropriate z-index */
+
+
+/* Optional styling for the canvas */
+#customerChart {
+    width: 100%; /* Makes sure the chart takes the full width */
+    height: auto; /* Makes the height auto-adjustable */
+}
+/* Ensure #add-customer takes the full height */
+#add-customer {
+    background-image: url('https://media.istockphoto.com/id/1200733291/photo/silhouette-paper-in-man-shape-hold-hand-together.jpg?s=1024x1024&w=is&k=20&c=E98OAWFNs_3gNgletw9HKYfEnyOdHhWjcgBLwMIp1u4=');
+    height: 100vh; /* Takes up the full height of the viewport */
+    overflow-y: auto; /* Allows scrolling if content exceeds the height */
+    padding: 20px;
+    background-color: rgb(247, 238, 247); /* Optional background color */
+    border: 1px solid #ccc; /* Optional border */
+    box-sizing: border-box; /* Ensures padding is included in the height */
+    position: absolute; /* Prevents overlap with other sections */
+    top: 0; /* Aligns the section to the top */
+    left: 0; /* Aligns the section to the left */
+    right: 0; /* Stretches to the right side */
+    z-index: 1; /* Ensures it's on top of other sections */
+}
+
+/* Ensure other sections have appropriate z-index */
+
+
+/* Optional styling for the form elements */
+form {
+    max-width: 600px; /* Limits the form width for readability */
+    margin: 0 auto; /* Centers the form horizontally */
+    padding: 20px;
+    background-color:#8e8989; /* Background color for the form */
+    border-radius: 8px; /* Optional rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Optional shadow effect */
+}
+
+/* Form input fields styling */
+input, textarea {
+    width: 100%; /* Makes inputs take the full width */
+    padding: 10px;
+    margin-bottom: 10px; /* Spacing between inputs */
+    border: 1px solid #ddd;
+    border-radius: 4px; /* Rounded corners */
+    box-sizing: border-box;
+}
+
+/* Styling for the submit button */
+button {
+    /* Makes the button full width */
+    padding: 10px;
+    background-color: #4CAF50; /* Green button */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049; /* Darker green when hovered */
+}
+#view-customers {
+    background-image: url('https://media.istockphoto.com/id/1200733291/photo/silhouette-paper-in-man-shape-hold-hand-together.jpg?s=1024x1024&w=is&k=20&c=E98OAWFNs_3gNgletw9HKYfEnyOdHhWjcgBLwMIp1u4=');
+    height: 100vh; /* Full viewport height */
+    overflow-y: auto; /* Allows scrolling if content exceeds height */
+    padding: 20px;
+    background-color: #f9f9f9; /* Optional background color */
+    border: 1px solid #ccc; /* Optional border */
+    box-sizing: border-box; /* Ensures padding is included in the height */
+    position: absolute; /* Prevents overlap with other sections */
+    top: 0; /* Aligns the section to the top */
+    left: 0; /* Aligns the section to the left */
+    right: 0; /* Stretches to the right side */
+    z-index: 1; /* Ensures it's on top of other sections */
+}
+
+#payment-due {
+   
+    height: 100vh;
+    overflow-y: auto;
+    padding: 20px;
+    color: red;
+    background-color: #f5cfcf;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+
+.payment-due-container {
+    background-color: rgba(255, 255, 255, 0.7); /* Slight white background for contrast */
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 80%; /* Container width */
+    margin: 20px auto;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.payment-due-container p {
+    font-size: 18px;
+    font-weight: bold;
+    color: #e74c3c; /* Red color for overdue payments */
+}
+
+
+#generate-customer-report {
+   
+    height: 100vh; /* Full viewport height */
+    overflow-y: auto; /* Allows scrolling if content exceeds height */
+    padding: 20px;
+    background-color: #f4fa9d; /* Optional background color */
+    border: 1px solid #ccc; /* Optional border */
+    box-sizing: border-box; /* Ensures padding is included in the height */
+    position: absolute; /* Prevents overlap with other sections */
+    top: 0; /* Aligns the section to the top */
+    left: 0; /* Aligns the section to the left */
+    right: 0; /* Stretches to the right side */
+    z-index: 1; /* Ensures it's on top of other sections */
+}
+.view-more-btn {
+    padding: 4px px;
+    font-size: 18px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.view-more-btn:hover {
+    background-color: black;
+}
+.small-button {
+        display: inline-block;
+        text-align: center;
+        width: 100px;
+        padding: 8px;
+        font-size: 14px;
+        color: white;
+        text-decoration: none;
+        background-color: #0c1013;
+        border-radius: 5px;
+    }
+    
+
+
+
+
+
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <h2>Dashboard</h2>
+        <a href="#" onclick="showSection('welcome')"><i class="fa fa-home"></i> Welcome</a>
+        <a href="#" onclick="showSection('product-management')"><i class="fa fa-cogs"></i> Product Management</a>
+        <a href="#" onclick="showSection('add-product')"><i class="fa fa-plus-circle"></i> Add Product</a>
+        <a href="#" onclick="showSection('view-products')"><i class="fa fa-eye"></i> View Products</a>
+        <a href="#" onclick="showSection('stock-alert')"><i class="fa fa-exclamation-circle"></i> Stock Alert</a>
+        <a href="#" onclick="showSection('generate-product-report')"><i class="fa fa-bar-chart"></i> Generate Product Report</a>
+        <a href="#" onclick="showSection('customer-management')"><i class="fa fa-users"></i> Customer Management</a>
+        <a href="#" onclick="showSection('add-customer')"><i class="fa fa-user-plus"></i> Add Customer</a>
+        <a href="#" onclick="showSection('view-customers')"><i class="fa fa-users"></i> View Customers</a>
+        <a href="#" onclick="showSection('payment-due')"><i class="fa fa-credit-card"></i> Payment Due</a>
+        <a href="#" onclick="showSection('generate-customer-report')"><i class="fa fa-file-text"></i> Generate Customer Report</a>
+        <a href="#" id="logout-btn" class="view-more-btn" onclick="logout()">
+            <i class="fa fa-sign-out"></i> Logout
+        </a>
+        
+        <script>
+            function logout() {
+                // Perform any necessary logout operations here, like clearing session data.
+                alert("You have been logged out successfully."); // Optional confirmation message.
+        
+                // Redirect to the home page.
+                window.location.href = '/home';
+            }
+        </script>
+
+    </div>
+    
+
+      <!-- HTML -->
+<div class="content">
+    <div id="welcome" class="section">
+        <div class="welcome-container">
+           
+            <p>Efficiently manage your products, customers, and sales with ease.</p>
+
+            <div class="features">
+                <div class="feature">
+                    <i class="fa fa-cogs fa-3x"></i>
+                    <h3>Product Management</h3>
+                    <p>Manage your products, update stock levels, and track sales.</p>
+                </div>
+                <div class="feature">
+                    <i class="fa fa-users fa-3x"></i>
+                    <h3>Customer Management</h3>
+                    <p>Keep track of customer details, orders, and payment history.</p>
+                </div>
+                <div class="feature">
+                    <i class="fa fa-credit-card fa-3x"></i>
+                    <h3>Sales & Payments</h3>
+                    <p>Track payments, manage invoices, and generate reports.</p>
+                </div>
+            </div>
+
+           
+        </div>
+    </div>
+</div>
+
+<div id="product-management" class="section hidden">
+    <h1>Product Management</h1>
+
+    <div id="product-cards-container" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-around;">
+        <!-- Product cards will be inserted here dynamically -->
+    </div>
+
+    <div id="total-value-card" style="display: none;">
+        <!-- Total value card will be created dynamically -->
+    </div>
+
+    <a href="/dashboard" class="small-button">
+        Back
+    </a>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Extract data from the #view-products table (specifically for products)
+        const products = [];
+        const tableRows = document.querySelectorAll('#view-products tbody tr');
+        
+        tableRows.forEach(row => {
+            const cells = row.querySelectorAll('td');
+            const product = {
+                name: cells[0].innerText.trim(),
+                finalPrice: parseFloat(cells[4].innerText.trim()),
+                stock: parseInt(cells[5].innerText.trim())
+            };
+            products.push(product);
+        });
+
+        // Generate product cards dynamically
+        const cardsContainer = document.getElementById('product-cards-container');
+        let totalValue = 0; // To calculate total value of all products
+
+        products.forEach(product => {
+            totalValue += product.finalPrice * product.stock;
+
+            const cardElement = document.createElement('div');
+            cardElement.style.cssText = `
+                width: 200px;
+                padding: 15px;
+                background-color: #f9f9f9;
+                border-radius: 10px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                text-align: center;
+                font-family: Arial, sans-serif;
+                margin: 10px;
+            `;
+
+            cardElement.innerHTML = `
+                <h2 style="color: #4CAF50; margin-bottom: 10px; font-size: 18px;">${product.name}</h2>
+                <p style="font-size: 16px; font-weight: bold; color: #3498db;">₹${(product.finalPrice * product.stock).toFixed(2)}</p>
+                <p style="font-size: 16px; font-weight: bold; color: #e74c3c;">Stock: ${product.stock}</p>
+            `;
+            cardsContainer.appendChild(cardElement);
+        });
+
+        // Create a circular card to display the total value
+        const totalCard = document.getElementById('total-value-card');
+        totalCard.style.cssText = `
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: #4CAF50;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 20px auto;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        `;
+        totalCard.innerHTML = `
+            <div>
+                <p>Total Value</p>
+                <p>₹${totalValue.toFixed(2)}</p>
+            </div>
+        `;
+        totalCard.style.display = 'flex'; // Ensure the card is visible
+    });
+</script>
+
+<style>
+    #product-management {
+        height: 100vh;
+        overflow-y: auto;
+        padding: 20px;
+        background-color: #abe1e4;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1;
+    }
+
+    #welcome {
+        z-index: 0;
+        position: relative;
+    }
+
+    #product-management h1 {
+        margin-top: 0;
+    }
+
+    #product-management p {
+        margin-bottom: 10px;
+    }
+</style>
+
+
+<div id="customer-management" class="section hidden">
+    <h1>Customer Management</h1>
+    <div id="customer-cards-container" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-around;">
+        <!-- Customer cards will be inserted here dynamically -->
+    </div>
+
+    <div id="total-revenue-card" style="display: none;">
+        <!-- Total revenue card will be created dynamically -->
+    </div>
+
+    <a href="/dashboard" class="small-button">
+        Back
+    </a>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Extract data from the table in the View Customers section
+        const customerRows = document.querySelectorAll('#view-customers tbody tr');
+
+        // Initialize data arrays
+        const customerNames = [];
+        const paymentDue = [];
+        const paymentPaid = [];
+
+        customerRows.forEach(row => {
+            const cells = row.querySelectorAll('td');
+            customerNames.push(cells[0].innerText.trim()); // Customer Name
+            paymentDue.push(parseFloat(cells[5].innerText.trim()) || 0); // Payment Due
+            paymentPaid.push(parseFloat(cells[6].innerText.trim()) || 0); // Payment Paid
+        });
+
+        // Generate customer cards dynamically
+        const cardsContainer = document.getElementById('customer-cards-container');
+        let totalRevenue = 0; // To calculate total revenue
+
+        customerNames.forEach((name, index) => {
+            totalRevenue += paymentPaid[index];
+
+            const cardElement = document.createElement('div');
+            cardElement.style.cssText = `
+                width: 200px;
+                padding: 15px;
+                background-color: #f9f9f9;
+                border-radius: 10px;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                text-align: center;
+                font-family: Arial, sans-serif;
+                margin: 10px;
+            `;
+
+            cardElement.innerHTML = `
+                <h2 style="color: #4CAF50; margin-bottom: 10px; font-size: 18px;">${name}</h2>
+                <p style="font-size: 16px; font-weight: bold; color: #e74c3c;">Payment Due: ₹${paymentDue[index].toFixed(2)}</p>
+                <p style="font-size: 16px; font-weight: bold; color: #3498db;">Payment Paid: ₹${paymentPaid[index].toFixed(2)}</p>
+            `;
+            cardsContainer.appendChild(cardElement);
+        });
+
+        // Create a circular card to display the total revenue
+        const totalCard = document.getElementById('total-revenue-card');
+        totalCard.style.cssText = `
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background-color: #4CAF50;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 20px auto;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        `;
+        totalCard.innerHTML = `
+            <div>
+                <p>Total Revenue</p>
+                <p>₹${totalRevenue.toFixed(2)}</p>
+            </div>
+        `;
+        totalCard.style.display = 'flex'; // Ensure the card is visible
+    });
+</script>
+
+<style>
+    #customer-management {
+        height: 100vh;
+        overflow-y: auto;
+        padding: 20px;
+        background-color: #abe1e4;
+        border: 1px solid #ccc;
+        box-sizing: border-box;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1;
+    }
+
+    #customer-management h1 {
+        margin-top: 0;
+    }
+
+    #customer-management p {
+        margin-bottom: 10px;
+    }
+</style>
+
+
+
+
+        <div id="add-product" class="section hidden">
+            <h1 style="text-align: center; margin-bottom: 20px;">Add Product</h1>
+            <form action="/add-product" method="POST" id="product-form" 
+                  style="width: 400px; max-width: 90%; margin: 0 auto; padding: 20px;  color:#2c3e50;
+                         border: 1px solid #ddd; border-radius: 8px; background-color: #91b6bc; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                <div style="margin-bottom: 10px;">
+                    <label for="name" style="display: block; font-weight: bold; font-size: 14px;">Product Name</label>
+                    <input type="text" name="name" id="name" placeholder="Product Name" required 
+                           style="width: 100%; padding: 6px; font-size: 14px; border-radius: 4px; border: 1px solid #ccc; box-sizing: border-box;">
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <label for="category" style="display: block; font-weight: bold; font-size: 14px;">Category</label>
+                    <input type="text" name="category" id="category" placeholder="Category" required 
+                           style="width: 100%; padding: 6px; font-size: 14px; border-radius: 4px; border: 1px solid #ccc; box-sizing: border-box;">
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <label for="price" style="display: block; font-weight: bold; font-size: 14px;">Price</label>
+                    <input type="number" name="price" id="price" placeholder="Price" required 
+                           style="width: 100%; padding: 6px; font-size: 14px; border-radius: 4px; border: 1px solid #ccc; box-sizing: border-box;">
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <label for="discount" style="display: block; font-weight: bold; font-size: 14px;">Discount (%)</label>
+                    <input type="number" name="discount" id="discount" placeholder="Discount (%)" required 
+                           style="width: 100%; padding: 6px; font-size: 14px; border-radius: 4px; border: 1px solid #ccc; box-sizing: border-box;">
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <label for="finalPrice" style="display: block; font-weight: bold; font-size: 14px;">Final Price</label>
+                    <input type="number" name="finalPrice" id="finalPrice" placeholder="Final Price" readonly 
+                           style="width: 100%; padding: 6px; font-size: 14px; border-radius: 4px; border: 1px solid #ccc; background-color: #f0f0f0; box-sizing: border-box;">
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <label for="stock" style="display: block; font-weight: bold; font-size: 14px;">Stock</label>
+                    <input type="number" name="stock" id="stock" placeholder="Stock" required 
+                           style="width: 100%; padding: 6px; font-size: 14px; border-radius: 4px; border: 1px solid #ccc; box-sizing: border-box;">
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label for="supplier" style="display: block; font-weight: bold; font-size: 14px;">Supplier Name</label>
+                    <input type="text" name="supplier" id="supplier" placeholder="Supplier Name" required 
+                           style="width: 100%; padding: 6px; font-size: 14px; border-radius: 4px; border: 1px solid #ccc; box-sizing: border-box;">
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <label for="sku" style="display: block; font-weight: bold; font-size: 14px;">SKU</label>
+                    <input type="text" name="sku" id="sku" placeholder="SKU" required 
+                           style="width: 100%; padding: 10px; font-size: 14px; border-radius: 4px; border: 1px solid #ccc; box-sizing: border-box;">
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <label for="description" style="display: block; font-weight: bold; font-size: 14px;">Product Description</label>
+                    <textarea name="description" id="description" placeholder="Product Description" required 
+                              style="width: 100%; padding: 6px; font-size: 14px; border-radius: 4px; border: 1px solid #ccc; height: 120px; box-sizing: border-box;"></textarea>
+                </div>
+                <div style="margin-bottom: 10px;">
+                    <label for="location" style="display: block; font-weight: bold; font-size: 14px;">Storage Location</label>
+                    <input type="text" name="location" id="location" placeholder="Storage Location" required 
+                           style="width: 100%; padding: 6px; font-size: 14px; border-radius: 4px; border: 1px solid #ccc; box-sizing: border-box;">
+                </div>
+                <div>
+                    <button type="submit" 
+                            style="width: 100%; padding: 12px; background-color: #2c3e50; color: white; 
+                                   border: none; border-radius: 4px; font-size: 16px; cursor: pointer;">
+                        Add Product
+                    </button>
+                    <a href="/dashboard" class="view-more-btn" 
+       style="display: block; text-align: center; margin-top: 15px; font-size: 14px; color:white; text-decoration: none;">
+        Back
+    </a>
+                </div>
+            </form>
+            <script>
+                // Calculate finalPrice dynamically
+                document.getElementById('price').addEventListener('input', calculateFinalPrice);
+                document.getElementById('discount').addEventListener('input', calculateFinalPrice);
+        
+                function calculateFinalPrice() {
+                    const price = parseFloat(document.getElementById('price').value);
+                    const discount = parseFloat(document.getElementById('discount').value);
+        
+                    if (!isNaN(price) && !isNaN(discount)) {
+                        const finalPrice = price - (price * (discount / 100));
+                        document.getElementById('finalPrice').value = finalPrice.toFixed(2);
+                    } else {
+                        document.getElementById('finalPrice').value = '';
+                    }
+                }
+            </script>
+        </div>
+        <!-- Success Modal -->
+
+
+
+
+<div id="view-products" class="section hidden">
+    <div style="text-align: center; margin-bottom: 20px; position: relative; display: inline-block;">
+        <input type="text" id="search-bar" placeholder="Search by product name" 
+               style="width: 50%; padding: 10px 40px 10px 10px; border: 1px solid #ddd; border-radius: 4px;">
+        <i class="fa fa-search" style="position: absolute; top: 50%; right: 15px; transform: translateY(-50%); color: #999;"></i>
+    </div>
+    
+    <h1 style="text-align: center; font-family: Arial, sans-serif; color: #333; margin-bottom: 20px;">View Products</h1>
+    <table style="width: 100%; border-collapse: collapse; font-family: Arial, sans-serif; font-size: 14px; margin: auto;">
+        <thead style="background-color: #4CAF50; color: white;">
+            <tr>
+                <th style="padding: 10px; border: 1px solid #ddd;">Name</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Category</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Price</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Discount</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Final Price</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Stock</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Supplier</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">SKU</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Description</th>
+                <th style="padding: 10px; border: 1px solid #ddd;">Location</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% products.forEach(product => { %>  <!-- Loop through the products -->
+            <tr data-id="<%= product._id %>" style="text-align: center; background-color: hsl(0, 33%, 94%);">
+                <td style="padding: 10px; border: 1px solid white;"><%= product.name %></td>
+                <td style="padding: 10px; border: 1px solid white;"><%= product.category %></td>
+                <td style="padding: 10px; border: 1px solid white;"><%= product.price %></td>
+                <td style="padding: 10px; border: 1px solid white;"><%= product.discount %></td>
+                <td style="padding: 10px; border: 1px solid white;"><%= product.finalPrice %></td>
+                <td style="padding: 10px; border: 1px solid white;"><%= product.stock %></td>
+                <td style="padding: 10px; border: 1px solid white;"><%= product.supplier %></td>
+                <td style="padding: 10px; border: 1px solid white;"><%= product.sku %></td>
+                <td style="padding: 10px; border: 1px solid white;"><%= product.description %></td>
+                <td style="padding: 10px; border: 1px solid white;"><%= product.location %></td>
+            </tr>
+            <% }) %>  <!-- End of loop -->
+        </tbody>
+    </table>
+
+    <!-- Action Container, Visible after all rows -->
+    <% products.forEach(product => { %> <!-- Loop again to render action form for each product -->
+    <div class="action-container" style="text-align: center; margin-top: 30px;">
+        <form action="/update-product/<%= product._id %>" method="POST" id="product-form" style="display: inline-block; margin-right: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 5px; background-color:rgb(193, 203, 194);">
+            <input type="text" name="name" value="<%= product.name %>" placeholder="Product Name" required style="padding: 5px;">
+            <input type="text" name="category" value="<%= product.category %>" placeholder="Category" required style="padding: 5px;">
+            <input type="number" name="price" id="price-<%= product._id %>" value="<%= product.price %>" placeholder="Price" required style="padding: 5px;">
+            <input type="number" name="discount" id="discount-<%= product._id %>" value="<%= product.discount %>" placeholder="Discount (%)" required style="padding: 5px;">
+            <input type="number" name="finalPrice" id="finalPrice-<%= product._id %>" value="<%= product.finalPrice %>" placeholder="Final Price" readonly style="padding: 5px;">
+            <input type="number" name="stock" value="<%= product.stock %>" placeholder="Stock" required style="padding: 5px;">
+            <input type="text" name="supplier" value="<%= product.supplier %>" placeholder="Supplier Name" required style="padding: 5px;">
+            <input type="text" name="sku" value="<%= product.sku %>" placeholder="SKU" required style="padding: 5px;">
+            <textarea name="description" placeholder="Product Description" required style="padding: 5px;"><%= product.description %></textarea>
+            <input type="text" name="location" value="<%= product.location %>" placeholder="Storage Location" required style="padding: 5px;">
+            <button type="submit" style="padding: 5px 10px; background-color: #4CAF50; color: white; border: none; border-radius: 3px; cursor: pointer;">Update Product</button>
+        </form>
+
+        <!-- Delete Form -->
+        <form action="/delete-product/<%= product._id %>" method="POST" style="display: inline-block;">
+            <button type="submit" style="padding: 5px 10px; background-color: #f44336; color: white; border: none; border-radius: 3px; cursor: pointer;">Delete Product</button>
+        </form>
+    </div>
+    <% }) %> 
+    <a href="/dashboard" class="view-more-btn" 
+    style="display: block; width: 120px; text-align: center; margin: 15px auto 0; font-size: 14px; color: white; text-decoration: none; background-color: #2c3e50; padding: 10px; border-radius: 4px;">
+     Back
+ </a>
+ <!-- End of action form loop -->
+</div>
+<script>
+   document.getElementById('search-bar').addEventListener('input', function() {
+    const searchQuery = this.value.toLowerCase();
+    const tableRows = document.querySelectorAll('tbody tr'); // Adjusted to target all rows in tbody
+
+    tableRows.forEach(row => {
+        const productName = row.cells[0].textContent.toLowerCase(); // Access the first cell for product name
+        if (productName.includes(searchQuery)) {
+            row.style.display = ''; // Show the row
+            row.style.backgroundColor = '#ffff99'; // Highlight the row with a light yellow color
+        } else {
+            row.style.display = 'none'; // Hide rows that don't match the search
+            row.style.backgroundColor = ''; // Remove highlight if not matching
+        }
+    });
+});
+
+
+
+    // Final Price Calculation Script
+    document.querySelectorAll('[id^="price-"]').forEach(input => {
+        const id = input.id.split('-')[1];
+        input.addEventListener('input', () => calculateFinalPrice(id));
+    });
+
+    document.querySelectorAll('[id^="discount-"]').forEach(input => {
+        const id = input.id.split('-')[1];
+        input.addEventListener('input', () => calculateFinalPrice(id));
+    });
+
+    function calculateFinalPrice(id) {
+        const price = parseFloat(document.getElementById('price-' + id).value);
+        const discount = parseFloat(document.getElementById('discount-' + id).value);
+        if (!isNaN(price) && !isNaN(discount)) {
+            const finalPrice = price - (price * (discount / 100));
+            document.getElementById('finalPrice-' + id).value = finalPrice.toFixed(2);
+        } else {
+            document.getElementById('finalPrice-' + id).value = '';
+        }
+    }
+</script>
+
+
+
+<div id="stock-alert" class="section hidden"  padding: 20px; background-color: gray; border-radius: 5px; border: 1px solid #f5c6cb; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); color: #cdd7fc; font-family: Arial, sans-serif; text-align: center;">
+    <h1 style="color: #721c24; font-family: Arial, sans-serif; margin-bottom: 20px; font-size: 24px;">Stock Alert</h1>
+    <% products.forEach(product => { %>
+        <% if (product.stock < 10) { %>
+            <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 15px; padding: 15px; background-color: #f8d7da; border: 1px solid #f5c6cb; border-radius: 5px;">
+                <i class="fa fa-exclamation-triangle" style="color: #721c24; font-size: 24px; margin-right: 10px;"></i>
+                <p style="font-size: 18px; margin: 0; color: #721c24;"><strong><%= product.name %></strong> is low on stock!</p>
+            </div>
+        <% } %>
+    <% }) %>
+    <a href="/dashboard" class="view-more-btn" 
+       style="display: block; width: 120px; text-align: center; margin: 15px auto 0; font-size: 14px; color: white; text-decoration: none; background-color: #2c3e50; padding: 10px; border-radius: 4px;">
+       Back
+    </a>
+</div>
+
+
+
+        
+        
+        
+        
+<div id="generate-product-report" class="section hidden" style="text-align: center; padding: 20px; background-color: #f4f4f9; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+    <h1 style="font-family: Arial, sans-serif; color: #270505; margin-bottom: 20px;">Generate Product Report</h1>
+    <button id="download-pdf" style="font-size: 14px; padding: 8px 15px; background-color: #4CAF50; color: white; border: none; border-radius: 3px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; justify-content: center;">
+        <i class="fa fa-file-pdf" style="font-size: 18px;"></i>
+        Download PDF
+    </button>
+    <a href="/dashboard" class="view-more-btn" 
+    style="display: block; width: 120px; text-align: center; margin: 15px auto 0; font-size: 14px; color: white; text-decoration: none; background-color: #2c3e50; padding: 10px; border-radius: 4px;">
+     Back
+ </a>
+</div>
+
+
+        
+        <!-- Include jsPDF and autoTable Plugin -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.16/jspdf.plugin.autotable.min.js"></script>
+        
+        <script>
+            document.getElementById('download-pdf').addEventListener('click', function() {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+        
+                // Add title to the PDF
+                doc.setFontSize(20);
+                doc.text('Product Report', 10, 20);
+        
+                // Get the table rows (excluding the header)
+                const rows = [];
+                const table = document.querySelector('#view-products tbody');
+                const tableRows = table.querySelectorAll('tr');
+        
+                tableRows.forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    const rowData = [];
+                    cells.forEach(cell => {
+                        rowData.push(cell.innerText); // Collect text from each cell
+                    });
+                    rows.push(rowData); // Add row data to the rows array
+                });
+        
+                // Define table headers
+                const headers = ['Name', 'Category', 'Price', 'Discount', 'Final Price', 'Stock', 'Supplier', 'SKU', 'Description', 'Location'];
+        
+                // Use autoTable to add the table to the PDF
+                doc.autoTable({
+                    head: [headers],
+                    body: rows,
+                    startY: 30, // Start the table below the title
+                    theme: 'striped'
+                });
+        
+                // Save the PDF with the filename 'product_report.pdf'
+                doc.save('product_report.pdf');
+            });
+        </script>
+        
+        
+        <div id="customer-management" class="section hidden">
+            <h1>Customer Management</h1>
+            <div id="cards-container" style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-around;">
+                <!-- Cards will be inserted here dynamically -->
+            </div>
+            <a href="/dashboard" class="view-more-btn" 
+               style="display: block; text-align: center; margin-top: 15px; font-size: 14px; color:white; text-decoration: none;">
+                Back
+            </a>
+        </div>
+        
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                // Extract data from the table in the View Customers section
+                const customerRows = document.querySelectorAll('#view-customers tbody tr');
+        
+                // Initialize data arrays
+                const customerNames = [];
+                const paymentDue = [];
+                const paymentPaid = [];
+        
+                customerRows.forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    customerNames.push(cells[0].innerText.trim()); // Customer Name
+                    paymentDue.push(parseFloat(cells[5].innerText.trim()) || 0); // Payment Due
+                    paymentPaid.push(parseFloat(cells[6].innerText.trim()) || 0); // Payment Paid
+                });
+        
+                // Generate cards dynamically
+                const cardsContainer = document.getElementById('cards-container');
+                customerNames.forEach((name, index) => {
+                    const cardElement = document.createElement('div');
+                    cardElement.style.cssText = `
+                        width: 250px;
+                        padding: 20px;
+                        background-color: #f9f9f9;
+                        border-radius: 10px;
+                        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+                        text-align: center;
+                        font-family: Arial, sans-serif;
+                    `;
+        
+                    cardElement.innerHTML = `
+                        <h2 style="color: #4CAF50; margin-bottom: 10px;">${name}</h2>
+                        <p style="font-size: 18px; font-weight: bold; color: #e74c3c;">Payment Due: ₹${paymentDue[index].toFixed(2)}</p>
+                        <p style="font-size: 18px; font-weight: bold; color: #3498db;">Payment Paid: ₹${paymentPaid[index].toFixed(2)}</p>
+                    `;
+                    cardsContainer.appendChild(cardElement);
+                });
+            });
+        </script>
+        
+        
+        
+        <div id="add-customer" class="section hidden">
+            <h1>Add Customer</h1>
+            <form action="/add-customer" method="POST">
+                <input type="text" name="name" placeholder="Customer Name" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="text" name="phone" placeholder="Phone" required>
+                <input type="text" name="address" placeholder="Address" required>
+                <textarea name="itemPurchased" placeholder="Items Purchased" required></textarea>
+                <input type="number" name="paymentDue" placeholder="Payment Due" required>
+                <input type="number" name="paymentPaid" placeholder="Payment Paid" required>
+                <input type="text" name="paymentMethod" placeholder="Payment Method" required>
+                <input type="date" name="purchaseDate" placeholder="Purchase Date" required>
+                <input type="number" name="quantity" placeholder="Quantity" required>
+
+               
+                <button type="submit">Add Customer</button>
+            </form>
+            <a href="/dashboard" class="view-more-btn" 
+    style="display: block; width: 120px; text-align: center; margin: 15px auto 0; font-size: 14px; color: white; text-decoration: none; background-color: #2c3e50; padding: 10px; border-radius: 4px;">
+     Back
+ </a>
+        </div>
+        
+        <script>
+            document.querySelector("form").addEventListener("submit", function(event) {
+                // Trim itemPurchased field
+                var itemPurchasedField = document.querySelector("textarea[name='itemPurchased']");
+                itemPurchasedField.value = itemPurchasedField.value.trim();
+                
+                // Trim notes field
+                var notesField = document.querySelector("textarea[name='notes']");
+                notesField.value = notesField.value.trim(); // Remove whitespace or newlines
+            });
+        </script>
+        
+        <div id="view-customers" class="section hidden">
+            <div style="text-align: center; margin-bottom: 20px; position: relative; display: inline-block;">
+                <input type="text" id="search-customers" placeholder="Search by customer name" 
+                       style="width: 50%; padding: 10px 40px 10px 10px; border: 1px solid #ddd; border-radius: 4px;">
+                <i class="fa fa-search" style="position: absolute; top: 50%; right: 15px; transform: translateY(-50%); color: #999;"></i>
+            </div>
+            
+            <h1 style="text-align: center; font-family: Arial, sans-serif; color: #333; margin-bottom: 20px;">View Customers</h1>
+            <table style="width: 100%; border-collapse: collapse; font-family: Arial, sans-serif; font-size: 14px; margin: auto;">
+                <thead style="background-color: #4CAF50; color: white;">
+                    <tr>
+                        <th style="padding: 10px; border: 1px solid #ddd;">Name</th>
+                        <th style="padding: 10px; border: 1px solid #ddd;">Email</th>
+                        <th style="padding: 10px; border: 1px solid #ddd;">Phone</th>
+                        <th style="padding: 10px; border: 1px solid #ddd;">Address</th>
+                        <th style="padding: 10px; border: 1px solid #ddd;">Items Purchased</th>
+                        <th style="padding: 10px; border: 1px solid #ddd;">Payment Due</th>
+                        <th style="padding: 10px; border: 1px solid #ddd;">Payment Paid</th>
+                        <th style="padding: 10px; border: 1px solid #ddd;">Payment Method</th>
+                        <th style="padding: 10px; border: 1px solid #ddd;">Purchase Date</th>
+                        <th style="padding: 10px; border: 1px solid #ddd;">Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% customers.forEach(customer => { %>
+                    <tr  data-id="<%= customer._id %>" style="text-align: center; background-color: #f9f9f9;">
+                        <td style="padding: 10px; border: 1px solid #ddd;"><%= customer.name %></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><%= customer.email %></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><%= customer.phone %></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><%= customer.address %></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><%= customer.itemPurchased %></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><%= customer.paymentDue %></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><%= customer.paymentPaid %></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><%= customer.paymentMethod %></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><%= customer.purchaseDate %></td>
+                        <td style="padding: 10px; border: 1px solid #ddd;"><%= customer.quantity %></td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        
+            <% customers.forEach(customer => { %>
+            <div style="margin-top: 20px; padding: 15px; border: 1px solid #ddd; border-radius: 5px;">
+                <h3 style="font-family: Arial, sans-serif; color: #333; margin-bottom: 10px;">Actions for <%= customer.name %>:</h3>
+        
+                <!-- Update Form -->
+                <form action="/update-customer/<%= customer._id %>" method="POST" style="margin-bottom: 20px;">
+                    <input type="text" name="name" value="<%= customer.name %>" placeholder="Customer Name" required style="padding: 5px; margin-bottom: 5px;">
+                    <input type="email" name="email" value="<%= customer.email %>" placeholder="Email" required style="padding: 5px; margin-bottom: 5px;">
+                    <input type="text" name="phone" value="<%= customer.phone %>" placeholder="Phone" required style="padding: 5px; margin-bottom: 5px;">
+                    <input type="text" name="address" value="<%= customer.address %>" placeholder="Address" required style="padding: 5px; margin-bottom: 5px;">
+                    <textarea name="itemPurchased" placeholder="Items Purchased" required style="padding: 5px; margin-bottom: 5px;"><%= customer.itemPurchased %></textarea>
+                    <input type="number" name="paymentDue" value="<%= customer.paymentDue %>" placeholder="Payment Due" required style="padding: 5px; margin-bottom: 5px;">
+                    <input type="number" name="paymentPaid" value="<%= customer.paymentPaid %>" placeholder="Payment Paid" required style="padding: 5px; margin-bottom: 5px;">
+                    <input type="text" name="paymentMethod" value="<%= customer.paymentMethod %>" placeholder="Payment Method" required style="padding: 5px; margin-bottom: 5px;">
+                    <input type="date" name="purchaseDate" value="<%= customer.purchaseDate %>" placeholder="Purchase Date" required style="padding: 5px; margin-bottom: 5px;">
+                    <input type="number" name="quantity" value="<%= customer.quantity %>" placeholder="Quantity" required style="padding: 5px; margin-bottom: 5px;">
+                    <button type="submit" style="padding: 5px 10px; background-color: #4CAF50; color: white; border: none; border-radius: 3px; cursor: pointer;">Update</button>
+                </form>
+        
+                <!-- Delete Form -->
+                <form action="/delete-customer/<%= customer._id %>" method="POST">
+                    <button type="submit" style="padding: 5px 10px; background-color: #f44336; color: white; border: none; border-radius: 3px; cursor: pointer;">Delete Customer</button>
+                </form>
+            </div>
+            <% }) %>
+        
+            <a href="/dashboard" class="view-more-btn" 
+               style="display: block; width: 120px; text-align: center; margin: 15px auto 0; font-size: 14px; color: white; text-decoration: none; background-color: #2c3e50; padding: 10px; border-radius: 4px;">
+               Back
+            </a>
+        </div>
+        
+        <script>
+            document.getElementById("search-customers").addEventListener("input", function () {
+        const searchTerm = this.value.toLowerCase();
+        const rows = document.querySelectorAll("#view-customers table tbody tr");
+
+        rows.forEach(row => {
+            const customerName = row.querySelector("td:first-child").innerText.toLowerCase();
+            if (customerName.includes(searchTerm)) {
+                row.style.display = ""; // Show matching row
+            } else {
+                row.style.display = "none"; // Hide non-matching row
+            }
+        });
+    });
+            // Script to trim values for itemPurchased and notes fields before submitting the update form
+            document.querySelectorAll("form").forEach(form => {
+                form.addEventListener("submit", function(event) {
+                    var itemPurchasedField = form.querySelector("textarea[name='itemPurchased']");
+                    if (itemPurchasedField) itemPurchasedField.value = itemPurchasedField.value.trim();
+        
+                    var notesField = form.querySelector("textarea[name='notes']");
+                    if (notesField) notesField.value = notesField.value.trim();
+                });
+            });
+        </script>
+        
+        
+        <script>
+            // Script to trim values for itemPurchased and notes fields before submitting the update form
+            document.querySelectorAll("form").forEach(form => {
+                form.addEventListener("submit", function(event) {
+                    var itemPurchasedField = form.querySelector("textarea[name='itemPurchased']");
+                    if (itemPurchasedField) itemPurchasedField.value = itemPurchasedField.value.trim();
+        
+                    var notesField = form.querySelector("textarea[name='notes']");
+                    if (notesField) notesField.value = notesField.value.trim();
+                });
+            });
+        </script>
+        
+        
+        
+        
+        
+        <script>
+            tableRows.forEach(row => {
+    const customerIdCell = row.getAttribute('data-id');
+    console.log('Row Data-ID:', customerIdCell); // Debugging
+    if (customerIdCell === selectedCustomerId) {
+        selectedRow = row;
+    }
+});
+
+            // Script to trim values for itemPurchased and notes fields before submitting the update form
+            document.querySelectorAll("form").forEach(form => {
+                form.addEventListener("submit", function(event) {
+                    var itemPurchasedField = form.querySelector("textarea[name='itemPurchased']");
+                    if (itemPurchasedField) itemPurchasedField.value = itemPurchasedField.value.trim();
+        
+                    var notesField = form.querySelector("textarea[name='notes']");
+                    if (notesField) notesField.value = notesField.value.trim();
+                });
+            });
+        </script>
+       <div id="payment-due" class="section hidden">
+        <h1>Payment Due</h1>
+        
+        <!-- Container for Payment Due Text -->
+        <div id="payment-due-container" class="payment-due-container">
+            <% customers.forEach(customer => { %>
+                <% if (customer.paymentDue > 1) { %>
+                    <p><strong><%= customer.name %></strong> has overdue payments!</p>
+                <% } %>
+            <% }) %>
+        </div>
+    
+        <a href="/dashboard" class="view-more-btn" 
+           style="display: block; width: 120px; text-align: center; margin: 15px auto 0; font-size: 14px; color: #f6f6f6fe; text-decoration: none; background-color: #252425; padding: 10px; border-radius: 4px;">
+           Back
+        </a>
+    </div>
+    
+        
+       
+        <div id="generate-customer-report" class="section hidden">
+            <h1>Generate Customer Report</h1>
+            <label for="customer-select">Select Customer:</label>
+            <select id="customer-select">
+                <option value="" disabled selected>Select a Customer</option>
+                <% customers.forEach(customer => { %>
+                <option value="<%= customer._id %>"><%= customer.name %></option>
+                <% }) %>
+            </select>
+            <button id="download-selected-customer-pdf" style="display: block; width: 300px; margin: 10px auto; padding: 10px 15px; background-color: #4CAF50; color: white; border: none; border-radius: 3px; cursor: pointer;">
+                Download Selected Customer Report
+            </button>
+        
+            <!-- Download All Customers Report Button -->
+            <button id="download-all-customers-pdf" style="display: block; width: 300px; margin: 10px auto; padding: 10px 15px; background-color: #4CAF50; color: white; border: none; border-radius: 3px; cursor: pointer;">
+                Download All Customers Report
+            </button>
+        
+            <!-- Back Button (Link) -->
+            <a href="/dashboard" class="view-more-btn" style="display: block; width: 120px; text-align: center; margin: 15px auto 0; font-size: 14px; color: #f6f6f6fe; text-decoration: none; background-color: #252425; padding: 10px; border-radius: 4px;">
+                Back
+            </a>
+        </div>
+        
+        <!-- Include jsPDF and autoTable Plugin -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.16/jspdf.plugin.autotable.min.js"></script>
+        <script>
+            // Function to generate PDF for all customers
+            document.getElementById('download-all-customers-pdf').addEventListener('click', function () {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+        
+                // Add title with alignment
+                doc.setFontSize(20);
+                doc.setTextColor(40, 40, 40); // Dark text color
+                doc.text('All Customers Report', doc.internal.pageSize.getWidth() / 2, 20, { align: 'center' });
+        
+                // Light background color for the PDF
+                const pageWidth = doc.internal.pageSize.getWidth();
+                const pageHeight = doc.internal.pageSize.getHeight();
+                doc.setFillColor(230, 240, 255); // Light blue background
+                doc.rect(0, 0, pageWidth, pageHeight, 'F');
+        
+                // Table headers
+                const headers = [
+                    'Name',
+                    'Email',
+                    'Phone',
+                    'Address',
+                    'Items Purchased',
+                    'Payment Due',
+                    'Payment Paid',
+                    'Payment Method',
+                    'Purchase Date',
+                    'Notes'
+                ];
+        
+                // Collect table data
+                const table = document.querySelector('#view-customers tbody');
+                const tableRows = table.querySelectorAll('tr');
+        
+                tableRows.forEach((row, index) => {
+                    const rowData = [];
+                    const cells = row.querySelectorAll('td:not(:last-child)'); // Exclude the "Actions" column
+        
+                    cells.forEach((cell, cellIndex) => {
+                        rowData.push([headers[cellIndex], cell.innerText.trim()]);
+                    });
+        
+                    // Add customer number before each section
+                    doc.setFontSize(14);
+                    doc.setTextColor(60, 141, 188); // Blue text
+                    doc.text(`Customer ${index + 1}`, 14, index === 0 ? 35 : doc.lastAutoTable.finalY + 10);
+        
+                    // Add section for each customer
+                    doc.autoTable({
+                        head: [['Field', 'Value']],
+                        body: rowData,
+                        startY: index === 0 ? 40 : doc.lastAutoTable.finalY + 15,
+                        theme: 'grid',
+                        headStyles: { fillColor: [60, 141, 188], textColor: [255, 255, 255], halign: 'center' },
+                        bodyStyles: { halign: 'left', valign: 'middle' },
+                        styles: { cellPadding: 5, fontSize: 10 },
+                    });
+                });
+        
+                // Save the PDF
+                doc.save('all_customers_report.pdf');
+            });
+        
+            // Function to generate PDF for a selected customer
+            document.getElementById('download-selected-customer-pdf').addEventListener('click', function () {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+        
+                // Get the selected customer ID
+                const customerSelect = document.getElementById('customer-select');
+                const selectedCustomerId = customerSelect.value;
+        
+                if (!selectedCustomerId) {
+                    alert('Please select a customer!');
+                    return;
+                }
+        
+                // Find the customer row based on the selected ID
+                const table = document.querySelector('#view-customers tbody');
+                const tableRows = table.querySelectorAll('tr');
+                let selectedRow;
+        
+                tableRows.forEach(row => {
+                    const customerIdCell = row.getAttribute('data-id'); // Ensure you pass the _id as data-id in <tr>
+                    if (customerIdCell === selectedCustomerId) {
+                        selectedRow = row;
+                    }
+                });
+        
+                if (!selectedRow) {
+                    alert('Customer not found!');
+                    return;
+                }
+        
+                // Collect row data
+                const headers = [
+                    'Name',
+                    'Email',
+                    'Phone',
+                    'Address',
+                    'Items Purchased',
+                    'Payment Due',
+                    'Payment Paid',
+                    'Payment Method',
+                    'Purchase Date',
+                    'Notes'
+                ];
+                const rowData = [];
+                const cells = selectedRow.querySelectorAll('td:not(:last-child)');
+                cells.forEach((cell, cellIndex) => {
+                    rowData.push([headers[cellIndex], cell.innerText.trim()]);
+                });
+        
+                // Add title with alignment
+                doc.setFontSize(20);
+                doc.setTextColor(40, 40, 40); // Dark text color
+                doc.text('Selected Customer Report', doc.internal.pageSize.getWidth() / 2, 20, { align: 'center' });
+        
+                // Light background color for the PDF
+                const pageWidth = doc.internal.pageSize.getWidth();
+                const pageHeight = doc.internal.pageSize.getHeight();
+                doc.setFillColor(230, 240, 255); // Light blue background
+                doc.rect(0, 0, pageWidth, pageHeight, 'F');
+        
+                // Add table to the PDF with headers as rows
+                doc.autoTable({
+                    head: [['Field', 'Value']],
+                    body: rowData,
+                    startY: 30,
+                    theme: 'grid',
+                    headStyles: { fillColor: [60, 141, 188], textColor: [255, 255, 255], halign: 'center' },
+                    bodyStyles: { halign: 'left', valign: 'middle' },
+                    styles: { cellPadding: 5, fontSize: 10 },
+                });
+        
+                // Save the PDF
+                doc.save('selected_customer_report.pdf');
+            });
+        </script>
+        
+        
+        
+        
+
+
+    <script>
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById(sectionId).classList.remove('hidden');
+        }
+        
+    </script>
+    <script>
+        // Function to toggle sections
+        function showSection(id) {
+            // Hide all sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach((section) => section.classList.remove('active'));
+    
+            // Show the selected section
+            const targetSection = document.getElementById(id);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+        }
+    
+        // Example: Add event listeners for sidebar links
+        document.querySelectorAll('.sidebar a').forEach((link) => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const sectionId = link.getAttribute('onclick').replace('showSection(', '').replace(')', '').replace(/['"]/g, '');
+                showSection(sectionId);
+            });
+        });
+    </script>
+    
+</body>
+
+</html>
